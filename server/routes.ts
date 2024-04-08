@@ -3,21 +3,24 @@ import { Express, Request, Response } from "express";
 import validateResource from "./middleware/validateResource";
 import requireUser from "./middleware/requireUser";
 
-import { createUserHandler } from "./controllers/user.controller";
+import {
+  createUserHandler,
+  getCurrentUser,
+} from "./controllers/user.controller";
 import {
   createUserSessionHandler,
   deleteSessionHandler,
   getUserSessionsHandler,
 } from "./controllers/session.controller";
-
-import { createUserSchema } from "./schemas/user.schema";
-import { createSessionSchema } from "./schemas/session.schema";
 import {
   createProductHandler,
   deleteProductHandler,
   getProductHandler,
   updateProductHandler,
 } from "./controllers/product.controller";
+
+import { createUserSchema } from "./schemas/user.schema";
+import { createSessionSchema } from "./schemas/session.schema";
 import {
   createProductSchema,
   deleteProductSchema,
@@ -34,6 +37,8 @@ const routes = (app: Express) => {
   // Authentication
 
   app.post("/api/users", validateResource(createUserSchema), createUserHandler);
+
+  app.get("/api/me", requireUser, getCurrentUser);
 
   app.post(
     "/api/sessions",

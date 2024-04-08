@@ -6,7 +6,7 @@ import connect from "./utils/connect";
 
 const app = createServer();
 
-const port = config.get<number>("port") || 3000;
+const port = config.get<number>("port") || 1337;
 
 app.listen(port, async () => {
   logger.info(`App is running at port ${port}...`);
